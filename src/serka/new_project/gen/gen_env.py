@@ -7,7 +7,7 @@ from subprocess import run, call
 
 class ProjectEnv:
 
-    def __init__(self, root: str, force: bool, git: bool, venv_name: str | None, remote: str | None):
+    def __init__(self, root: str, force: bool, git: bool, remote: str | None, venv_name: str | None):
         self.force = force
         self.git = git
         self.venv_name = venv_name

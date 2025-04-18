@@ -57,12 +57,12 @@ class ProjectStructure:
         if not os.path.exists('docs'):
             print("Making docs directory")
             pip_install(self.python_exec, 'sphinx')
-            run(['sphinx-quickstart', 'docs', '--quiet', '--no-sep', '-p', self.name, '-a', self.author, '-r', f'{self.ver}', '-l', 'en', '--makefile', '--batchfile', '-m', '--ext-autodoc'])
+            run([self.python_exec, '-m', 'sphinx.cmd.quickstart', 'docs', '--quiet', '--no-sep', '-p', f'{self.name}', '-a', f'{self.author}', '-r', f'{self.ver}', '-l', 'en', '--makefile', '--batchfile', '-m', '--ext-autodoc'])
         elif self.force:
             print("Docs directory already exists")
             print("Overwriting...")
             pip_install(self.python_exec, 'sphinx')
-            run(['sphinx-quickstart', 'docs', '--quiet', '--no-sep', '-p', self.name, '-a', self.author, '-r', f'{self.ver}', '-l', 'en', '--makefile', '--batchfile', '-m', '--ext-autodoc'])
+            run([self.python_exec, '-m', 'sphinx.cmd.quickstart', 'docs', '--quiet', '--no-sep', '-p', f'{self.name}', '-a', f'{self.author}', '-r', f'{self.ver}', '-l', 'en', '--makefile', '--batchfile', '-m', '--ext-autodoc'])
         else:
             print("Docs direcotry already exists")
             print("Continuing")

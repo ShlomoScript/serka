@@ -52,36 +52,45 @@ class ProjectFiles:
         """Create the pyproject.toml."""
         pyproject = {
             'build-system': {
-                'requires': ["setuptools"],
+                'requires': ['setuptools', 'wheel'],
                 'build-backend': "setuptools.build_meta"
             },
             'project': {
                 'name': self.name,
-                'version': self.ver,
+                'version': f'{self.ver}',
                 'authors': [{'name': self.author, 'email': self.email}],
                 'description': self.desc,
                 'readme': "README.md",
-                'dependencies': []
+                'dependencies': [],
+                'scripts': {
+                    self.name: f"{self.name}.main:main"
+                }
             },
-            'project.scripts': {
-                self.name: f"{self.name}.main:main"
+            'tool': {
+                'setuptools': {
+                    'package-dir': { "": "src" },
+                    'packages': {
+                        'find': {
+                            'where': ["src"]
+                        }
+                    }
+                }
             },
-            'tool.setuptools': {
-                'package-dir': { "": "src"}
-            },
-            'tool.setuptools.packages.find': {
-                'where': ["src"]
-            }
         }
+        toml_string = tomli_w.dumps(pyproject)
+        toml_string = toml_string.replace(
+            '[tool.setuptools.package-dir]\n"" = "src"',
+            '[tool.setuptools]\npackage-dir = { "" = "src" }'
+        )
         if not os.path.exists('pyproject.toml'):
             print("Creating pyproject.toml")
-            with open('pyproject.toml', 'x') as f:
-                tomli_w.dump(pyproject, f)
+            with open('pyproject.toml', 'xb') as f:
+                f.write(toml_string.encode("utf-8"))
         elif self.force:
             print("pyroject.toml already exists")
             print("Overwriting...")
-            with open('pyproject.toml', 'w'):
-                tomli_w.dump(pyproject, f)
+            with open('pyproject.toml', 'wb') as f:
+                f.write(toml_string.encode("utf-8"))
         else:
             print("pyproject.toml already exists")
             print("Continuing")
