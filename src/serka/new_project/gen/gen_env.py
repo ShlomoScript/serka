@@ -52,6 +52,7 @@ class ProjectEnv:
             bin_dir = os.path.join(self.root, self.venv_name, "bin")
         return venv_exec, bin_dir
 
+    @staticmethod
     def is_git_repo_root() -> bool:
         """
         Check if the current directory is the root of a git repository.
