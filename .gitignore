@@ -8,3 +8,5 @@ dist/
 *.so
 *~
 .vscode/
+docs/_build/
+.pytest_cache/
