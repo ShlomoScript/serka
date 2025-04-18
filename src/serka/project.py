@@ -16,6 +16,7 @@ class Project(ProjectEnv, ProjectStructure, ProjectFiles):
         self.author: str = args.author
         self.name = os.path.basename(root)
         ProjectEnv.__init__(
+            self,
             root,
             self.force,
             args.git,
@@ -23,6 +24,7 @@ class Project(ProjectEnv, ProjectStructure, ProjectFiles):
             args.remote
         )
         ProjectStructure.__init__(
+            self,
             args.docs,
             args.tests,
             args.author,
@@ -32,6 +34,7 @@ class Project(ProjectEnv, ProjectStructure, ProjectFiles):
             self.venv_exec
         )
         ProjectFiles.__init__(
+            self,
             self.root,
             self.tests,
             self.name,
